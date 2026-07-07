@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Receipt</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h1>Fresh Grocery Store</h1>
+    <h2>Thank You For Your Order!</h2>
+
+    <hr>
+
+    <p><b>Order ID:</b> <span id="orderId"></span></p>
+    <p><b>Date:</b> <span id="date"></span></p>
+    <p><b>Time:</b> <span id="time"></span></p>
+
+    <hr>
+
+    <h2>Customer Details</h2>
+
+    <p><b>Name:</b> <span id="rname"></span></p>
+    <p><b>Address:</b> <span id="raddress"></span></p>
+    <p><b>Phone:</b> <span id="rphone"></span></p>
+
+    <hr>
+
+    <h2>Purchased Products</h2>
+
+    <div id="products"></div>
+
+    <h2 id="total"></h2>
+
+    <br>
+
+    <button onclick="goHome()">Back to Home</button>
+
+</div>
+
+<script src="receipt.js"></script>
+
+</body>
+</html>

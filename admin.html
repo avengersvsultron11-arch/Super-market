@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<script>
+// Only admin can access
+let user = localStorage.getItem("loggedInUser");
+
+if(user !== "admin"){
+    alert("Access Denied! Admin Login Required.");
+    window.location.href = "login.html";
+}
+</script>
+
+<div class="container">
+
+<h1>Admin Dashboard</h1>
+
+<h2>All Customer Orders</h2>
+
+<div id="history"></div>
+
+<br>
+
+<button onclick="window.location.href='index.html'">
+Back to Home
+</button>
+
+</div>
+
+<script>
+
+let history = JSON.parse(localStorage.getItem("allHistory")) || [];
+
+function showOrders(){
+
+let output="";
+
+if(history.length===0){
+
+output="<h3>No Orders Found</h3>";
+
+}else{
+
+history.forEach((item,index)=>{
+
+output += `
+<div style="border:1px solid #ccc;padding:15px;margin:15px;border-radius:10px;background:#f9f9f9;">
+
+<h3>Order ${index+1}</h3>
+
+<p><b>Username:</b> ${item.username}</p>
+
+<p><b>Customer Name:</b> ${item.customer}</p>
+
+<p><b>Address:</b> ${item.address}</p>
+
+<p><b>Phone:</b> ${item.phone}</p>
+
+<p><b>Order ID:</b> ${item.orderId}</p>
+
+<p><b>Date:</b> ${item.date}</p>
+
+<p><b>Time:</b> ${item.time}</p>
+
+<p><b>Products Purchased:</b></p>
+
+<ul>
+${item.products.map(product => `<li>${product}</li>`).join("")}
+</ul>
+
+<h3>Total : ₹${item.total}</h3>
+
+<button onclick="deleteOrder(${index})">
+Delete Order
+</button>
+
+</div>
+`;
+
+});
+
+}
+
+document.getElementById("history").innerHTML=output;
+
+}
+
+function deleteOrder(index){
+
+if(confirm("Delete this order?")){
+
+history.splice(index,1);
+
+localStorage.setItem("allHistory",JSON.stringify(history));
+
+showOrders();
+
+}
+
+}
+
+showOrders();
+
+</script>
+
+</body>
+</html>

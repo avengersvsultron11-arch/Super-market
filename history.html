@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 style="text-align:center;">Receipt History</h1>
+
+        <div id="history"></div>
+
+        <div style="text-align:center; margin-top:20px;">
+            <button onclick="window.location.href='index.html'">
+                Back to Home
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let history = JSON.parse(localStorage.getItem("receiptHistory")) || [];
+
+        function showHistory() {
+            let output = "";
+
+            if (history.length === 0) {
+                output = "<h3 style='text-align:center;'>No Receipt History Found</h3>";
+            } else {
+                history.forEach((item, index) => {
+                    output += `
+                    <div style="border:1px solid #ccc;padding:15px;margin:15px 0;border-radius:10px;background:#f9f9f9;">
+                        <h3>Receipt ${index + 1}</h3>
+
+                        <p><strong>Order ID:</strong> ${item.orderId}</p>
+                        <p><strong>Customer:</strong> ${item.customer}</p>
+                        <p><strong>Total:</strong> ₹${item.total}</p>
+                        <p><strong>Date:</strong> ${item.date}</p>
+                        <p><strong>Time:</strong> ${item.time}</p>
+
+                        <button onclick="deleteReceipt(${index})"
+                        style="background:red;color:white;border:none;padding:10px 15px;border-radius:5px;cursor:pointer;">
+                            Delete
+                        </button>
+                    </div>
+                    `;
+                });
+            }
+
+            document.getElementById("history").innerHTML = output;
+        }
+
+        function deleteReceipt(index) {
+            if (confirm("Delete this receipt?")) {
+                history.splice(index, 1);
+                localStorage.setItem("receiptHistory", JSON.stringify(history));
+                showHistory();
+            }
+        }
+
+        showHistory();
+    </script>
+
+</body>
+</html>
